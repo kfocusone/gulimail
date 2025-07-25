@@ -40,7 +40,6 @@
     <dependencyManagement>
         <dependencies>
 
-
             <!-- mysql驱动 -->
             <dependency>
                 <groupId>com.mysql</groupId>
@@ -60,6 +59,8 @@
                 <version>${knife4j.version}</version>
             </dependency>
 
+
+            <!-- lombok -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
