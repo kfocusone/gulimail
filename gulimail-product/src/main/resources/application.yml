@@ -17,6 +17,15 @@ spring:
       pool-name: SPHHikariPool # 连接池名称
   jackson:
     time-zone: GMT+8  # 设置程序运行时的时区
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.20.233.184:8848
+        username: nacos  # 如果账户密码修改，需要在此显式列出
+        password: 123456
+
+  application:
+    name: gulimail-product
 
 #用于打印框架生成的sql语句，便于调试
 mybatis-plus:
