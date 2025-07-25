@@ -20,10 +20,10 @@ buildNumber.properties
 .idea
 
 **/.gitignore
-
+**/docker-compose.yml
 *.log
 
 *.md
 
-renren-security
+#renren-security
 
