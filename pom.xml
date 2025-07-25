@@ -35,11 +35,22 @@
         <knife4j.version>4.5.0</knife4j.version>
         <hutool.version>5.8.29</hutool.version>
         <mysql.version>8.3.0</mysql.version>
+        <spring.cloud.version>2023.0.6</spring.cloud.version>
         <alibaba.cloud.version>2023.0.1.0</alibaba.cloud.version>
     </properties>
 
+    <!-- 这个文件也许写在gulimail-common 模块更好 -->
+    <!--好像也不是，common模块只是被引入，但是不是父项目，写在那里无法识别 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
