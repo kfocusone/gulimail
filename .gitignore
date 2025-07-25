@@ -22,4 +22,6 @@ buildNumber.properties
 
 *.log
 
+.md
+
 renren-security
