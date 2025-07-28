@@ -6,9 +6,9 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
-.mvn/timing.properties
+.mvn
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
-.mvn/wrapper/maven-wrapper.jar
+#.mvn/wrapper/maven-wrapper.jar
 
 # Eclipse m2e generated files
 # Eclipse Core
@@ -20,12 +20,18 @@ buildNumber.properties
 .idea
 
 **/.gitignore
+!.gitignore
 **/docker-compose.yml
 *.log
 
 logs
-**/src/test
+test/
 *.md
+
+.mvnw
+.mvnw.cmd
+maven-wrapper.properties
+.gitattributes
 
 #renren-security
 
