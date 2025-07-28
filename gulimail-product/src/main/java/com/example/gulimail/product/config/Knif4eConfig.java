@@ -26,9 +26,10 @@ public class Knif4eConfig {
     @Bean
     public GroupedOpenApi systemAPI() {
 
-        return GroupedOpenApi.builder().group("产品管理").
+        return GroupedOpenApi.builder().group("商品管理").
                 pathsToMatch(
-                        "/product/brand/**"
+                        "/product/brand/**",
+                        "/product/category/**"
                 ).
                 build();
     }

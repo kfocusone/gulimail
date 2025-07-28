@@ -17,16 +17,25 @@ spring:
       pool-name: SMSHikariPool # 连接池名称
   jackson:
     time-zone: GMT+8  # 设置程序运行时的时区
-
+  application:
+    name: gulimail-coupon
   cloud:
     nacos:
       discovery:
         server-addr: 172.20.233.184:8848
         username: nacos  # 如果账户密码修改，需要在此显式列出
         password: 123456
+      config:
+        server-addr: 172.20.233.184:8848
+        username: nacos
+        password: 123456
+        #        namespace: public
+        file-extension: properties
+  config:
+    import:
+      - nacos:gulimail-coupon?group=DEFAULT_GROUP&file-extension=properties
+      - nacos:gulimail-coupon?group=dev&file-extension=properties
 
-  application:
-    name: gulimail-coupon
 
 #用于打印框架生成的sql语句，便于调试
 mybatis-plus:
@@ -44,3 +53,13 @@ mybatis-plus:
 
 springdoc:
   default-flat-param-object: true
+
+logging:
+  file:
+    path: logs # 日志文件存放目录
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n" # 输出到文件的日志格式
+  level:
+    root: info # 设置根日志级别为 info
+    com.alibaba.cloud.nacos: debug # 特定包的日志级别设置
+    org.springframework.cloud.config.client: DEBUG

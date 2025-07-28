@@ -23,6 +23,10 @@ spring:
         server-addr: 172.20.233.184:8848
         username: nacos  # 如果账户密码修改，需要在此显式列出
         password: 123456
+      config:
+        server-addr: 172.20.233.184:8848
+        username: nacos
+        password: 123456
 
   application:
     name: gulimail-product

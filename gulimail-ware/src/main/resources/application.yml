@@ -26,7 +26,7 @@ spring:
         password: 123456
 
   application:
-    name: gulimail-ware
+    name: gulimall-ware
 
 #用于打印框架生成的sql语句，便于调试
 mybatis-plus:

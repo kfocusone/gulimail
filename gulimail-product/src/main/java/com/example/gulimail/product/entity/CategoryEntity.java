@@ -1,10 +1,13 @@
 package com.example.gulimail.product.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 商品三级分类
@@ -36,6 +39,7 @@ public class CategoryEntity {
     /**
      * 是否显示[0-不显示，1显示]
      */
+    @TableLogic(value = "1", delval = "0")
 	private Integer showStatus;
     /**
      * 排序
@@ -53,4 +57,10 @@ public class CategoryEntity {
      * 商品数量
      */
 	private Integer productCount;
+
+    /**
+     * 子分类数据，该数据并不存在于数据库中，所以需要标注其不存在
+     */
+    @TableField(exist = false)
+    private List<CategoryEntity> children;
 }

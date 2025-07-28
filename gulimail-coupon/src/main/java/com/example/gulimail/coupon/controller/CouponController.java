@@ -3,7 +3,10 @@ package com.example.gulimail.coupon.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.alibaba.cloud.nacos.annotation.NacosConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,17 +30,6 @@ import com.example.gulimail.common.utils.R;
 public class CouponController {
     @Autowired
     private CouponService couponService;
-
-    /*
-     * feign 测试使用
-     **/
-    @RequestMapping("/member/list")
-    public R membercoupons() {
-        CouponEntity couponEntity = new CouponEntity();
-        couponEntity.setCouponName("满100减10");
-        return R.ok().put("coupons", Arrays.asList(couponEntity));
-    }
-
 
     /**
      * 列表

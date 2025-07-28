@@ -23,6 +23,8 @@ buildNumber.properties
 **/docker-compose.yml
 *.log
 
+logs
+**/src/test
 *.md
 
 #renren-security

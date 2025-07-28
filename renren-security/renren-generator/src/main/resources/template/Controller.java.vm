@@ -3,6 +3,8 @@ package ${package}.${moduleName}.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +24,7 @@ import ${package}.common.utils.R;
  * @email ${email}
  * @date ${datetime}
  */
+@Tag(name = "${className}管理")
 @RestController
 @RequestMapping("${moduleName}/${pathName}")
 public class ${className}Controller {
@@ -31,9 +34,10 @@ public class ${className}Controller {
     /**
      * 列表
      */
+    @Operation("查询所有信息")
     @RequestMapping("/list")
     //@RequiresPermissions("${moduleName}:${pathName}:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = ${classname}Service.queryPage(params);
 
         return R.ok().put("page", page);
@@ -43,10 +47,11 @@ public class ${className}Controller {
     /**
      * 信息
      */
+    @Operation("根据id查询信息")
     @RequestMapping("/info/{${pk.attrname}}")
     //@RequiresPermissions("${moduleName}:${pathName}:info")
-    public R info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
-            ${className}Entity ${classname} = ${classname}Service.getById(${pk.attrname});
+    public R info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}) {
+        ${className}Entity ${classname} = ${classname}Service.getById(${pk.attrname});
 
         return R.ok().put("${classname}", ${classname});
     }
@@ -54,10 +59,11 @@ public class ${className}Controller {
     /**
      * 保存
      */
+    @Operation("保存")
     @RequestMapping("/save")
     //@RequiresPermissions("${moduleName}:${pathName}:save")
-    public R save(@RequestBody ${className}Entity ${classname}){
-            ${classname}Service.save(${classname});
+    public R save(@RequestBody ${className}Entity ${classname}) {
+        ${classname}Service.save(${classname});
 
         return R.ok();
     }
@@ -65,10 +71,11 @@ public class ${className}Controller {
     /**
      * 修改
      */
+    @Operation(summary = "更新")
     @RequestMapping("/update")
     //@RequiresPermissions("${moduleName}:${pathName}:update")
-    public R update(@RequestBody ${className}Entity ${classname}){
-            ${classname}Service.updateById(${classname});
+    public R update(@RequestBody ${className}Entity ${classname}) {
+        ${classname}Service.updateById(${classname});
 
         return R.ok();
     }
@@ -76,10 +83,11 @@ public class ${className}Controller {
     /**
      * 删除
      */
+    @Operation(summary = "根据id删除")
     @RequestMapping("/delete")
     //@RequiresPermissions("${moduleName}:${pathName}:delete")
-    public R delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
-            ${classname}Service.removeByIds(Arrays.asList(${pk.attrname}s));
+    public R delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s) {
+        ${classname}Service.removeByIds(Arrays.asList(${pk.attrname}s));
 
         return R.ok();
     }
