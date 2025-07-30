@@ -2,7 +2,13 @@ package com.example.gulimail.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.gulimail.common.utils.PageUtils;
+import com.example.gulimail.common.valid.SaveValid;
+import com.example.gulimail.common.valid.UpdateStatus;
+import com.example.gulimail.common.valid.UpdateVaild;
 import com.example.gulimail.product.entity.CategoryBrandRelationEntity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 
 import java.util.Map;
 
@@ -16,4 +22,10 @@ import java.util.Map;
 public interface CategoryBrandRelationService extends IService<CategoryBrandRelationEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveDetail(CategoryBrandRelationEntity categoryBrandRelation);
+
+    void updateBrand( Long brandId,  String name);
+
+    void updateCatelog(Long catId, String name);
 }

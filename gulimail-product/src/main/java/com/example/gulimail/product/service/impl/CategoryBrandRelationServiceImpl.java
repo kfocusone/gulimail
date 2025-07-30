@@ -1,5 +1,13 @@
 package com.example.gulimail.product.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.gulimail.product.dao.BrandDao;
+import com.example.gulimail.product.dao.CategoryDao;
+import com.example.gulimail.product.service.BrandService;
+import com.example.gulimail.product.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -21,6 +29,19 @@ import com.example.gulimail.product.service.CategoryBrandRelationService;
 @Service
 public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandRelationDao, CategoryBrandRelationEntity> implements CategoryBrandRelationService {
 
+//    @Autowired
+//    private BrandService brandService;
+
+    @Autowired
+    private BrandDao brandDao;
+
+//    @Autowired
+//    private CategoryService categoryService;
+
+
+    @Autowired
+    private CategoryDao categoryDao;
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<CategoryBrandRelationEntity> page = this.page(
@@ -29,6 +50,40 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public void saveDetail(CategoryBrandRelationEntity categoryBrandRelation) {
+        Long brandId = categoryBrandRelation.getBrandId();
+        Long catelogId = categoryBrandRelation.getCatelogId();
+
+//        String cateName = categoryService.getById(catelogId).getName();
+        String cateName = categoryDao.selectNameById(catelogId);
+//        String brandName = brandServce.getById(brandId).getName();
+        String brandName = brandDao.selectById(brandId).getName();
+
+
+        categoryBrandRelation.setBrandName(brandName);
+        categoryBrandRelation.setCatelogName(cateName);
+
+        this.save(categoryBrandRelation);
+
+    }
+
+    @Override
+    public void updateBrand(Long brandId, String name) {
+        LambdaUpdateWrapper<CategoryBrandRelationEntity> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(CategoryBrandRelationEntity::getBrandId, brandId);
+        updateWrapper.set(CategoryBrandRelationEntity::getBrandName, name);
+        this.update(updateWrapper);
+    }
+
+    @Override
+    public void updateCatelog(Long catId, String name) {
+        LambdaUpdateWrapper<CategoryBrandRelationEntity> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(CategoryBrandRelationEntity::getBrandId, catId);
+        updateWrapper.set(CategoryBrandRelationEntity::getBrandName, name);
+        this.update(updateWrapper);
     }
 
 }

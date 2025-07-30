@@ -12,8 +12,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 /**
  * 自定义校验注解
  *
- * @author hl
- * @Data 2020/7/20
  */
 @Documented
 @Constraint(validatedBy = {com.example.gulimail.common.valid.ListValueConstraintValidator.class}) // 使用自定义校验器

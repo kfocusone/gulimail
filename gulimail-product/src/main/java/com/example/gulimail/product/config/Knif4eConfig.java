@@ -29,7 +29,9 @@ public class Knif4eConfig {
         return GroupedOpenApi.builder().group("商品管理").
                 pathsToMatch(
                         "/product/brand/**",
-                        "/product/category/**"
+                        "/product/category/**",
+                        "/product/attrgroup/**",
+                        "/product/categorybrandrelation/**"
                 ).
                 build();
     }

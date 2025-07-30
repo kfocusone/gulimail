@@ -28,7 +28,7 @@ public class BrandEntity implements Serializable {
     /**
      * 品牌id
      */
-    @NotNull(groups = {UpdateVaild.class}, message = "修改时品牌id不能为空")
+    @NotNull(groups = {UpdateVaild.class, UpdateStatus.class}, message = "修改时品牌id不能为空")
     @Null(groups = {SaveValid.class}, message = "新增时品牌id必须为空")
     @TableId
     private Long brandId;

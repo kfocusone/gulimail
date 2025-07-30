@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.gulimail.product.entity.CategoryEntity;
 import com.example.gulimail.product.service.CategoryService;
-import com.example.gulimail.common.utils.PageUtils;
 import com.example.gulimail.common.utils.R;
 
 
@@ -75,7 +74,8 @@ public class CategoryController {
     @RequestMapping("/update")
     //@RequiresPermissions("product:category:update")
     public R update(@RequestBody CategoryEntity category){
-            categoryService.updateById(category);
+        // 级联更新品牌属性
+        categoryService.updateCascade(category);
 
         return R.ok();
     }

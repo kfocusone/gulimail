@@ -47,3 +47,11 @@ mybatis-plus:
 
 springdoc:
   default-flat-param-object: true
+
+logging:
+  file:
+    path: logs/product
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n" # 输出到文件的日志格式
+  level:
+    com.example.gulimail.product: debug

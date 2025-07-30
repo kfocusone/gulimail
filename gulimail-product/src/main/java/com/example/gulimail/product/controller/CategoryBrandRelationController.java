@@ -1,14 +1,15 @@
 package com.example.gulimail.product.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.gulimail.product.entity.BrandEntity;
+import com.example.gulimail.product.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.gulimail.product.entity.CategoryBrandRelationEntity;
 import com.example.gulimail.product.service.CategoryBrandRelationService;
@@ -29,6 +30,44 @@ import com.example.gulimail.common.utils.R;
 public class CategoryBrandRelationController {
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
+
+    @Autowired
+    private BrandService brandService;
+
+    /**
+     * 获取当前品牌关联的所有分类
+     */
+    @GetMapping("/catelog/list")
+    public R catelogList(@RequestParam("brandId") Long brandId) {
+
+        LambdaQueryWrapper<CategoryBrandRelationEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(CategoryBrandRelationEntity::getBrandId, brandId);
+        List<CategoryBrandRelationEntity> list = categoryBrandRelationService.list(queryWrapper);
+
+        return R.ok().put("brandIdRela", list);
+    }
+
+    /**
+     * 获取当前分类关联的所有品牌
+     * 1.app:处理请求,接受和校验数据(即将数据封装成service要求的形式)
+     * 2.service接受controller传来的数据,进行业务处理
+     * 3.Controller接受Service处理完的数据,封装成页面指定的vo
+     */
+    @GetMapping("/brands/list")
+    public R relaionBrandList(@RequestParam(value = "catId", required = true) Long catId) {
+
+        LambdaQueryWrapper<CategoryBrandRelationEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(CategoryBrandRelationEntity::getCatelogId, catId);
+        List<CategoryBrandRelationEntity> cateList = categoryBrandRelationService.list(queryWrapper);
+
+        List<BrandEntity> brandEntities = new ArrayList<>();
+        for (CategoryBrandRelationEntity entity : cateList) {
+            brandEntities.add(brandService.getById(entity.getBrandId()));
+        }
+
+
+        return R.ok().put("brands", brandEntities);
+    }
 
     /**
      * 列表
@@ -59,7 +98,7 @@ public class CategoryBrandRelationController {
     @RequestMapping("/save")
     //@RequiresPermissions("product:categorybrandrelation:save")
     public R save(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
-            categoryBrandRelationService.save(categoryBrandRelation);
+        categoryBrandRelationService.saveDetail(categoryBrandRelation);
 
         return R.ok();
     }

@@ -1,5 +1,6 @@
 package com.example.gulimail.product.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -20,25 +21,29 @@ public class AttrGroupEntity {
      * 分组id
      */
     @TableId
-	private Long attrGroupId;
+    private Long attrGroupId;
     /**
      * 组名
      */
-	private String attrGroupName;
+    private String attrGroupName;
     /**
      * 排序
      */
-	private Integer sort;
+    private Integer sort;
     /**
      * 描述
      */
-	private String descript;
+    private String descript;
     /**
      * 组图标
      */
-	private String icon;
+    private String icon;
     /**
      * 所属分类id
      */
-	private Long catelogId;
+    private Long catelogId;
+
+    @TableField(exist = false)
+    private Long[] catelogPath;
+
 }
