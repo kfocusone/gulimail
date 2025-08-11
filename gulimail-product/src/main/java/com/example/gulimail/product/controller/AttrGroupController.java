@@ -7,16 +7,15 @@ import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.gulimail.product.entity.AttrEntity;
+import com.example.gulimail.product.service.AttrService;
 import com.example.gulimail.product.service.CategoryService;
+import com.example.gulimail.product.vo.AttrGroupVo;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.gulimail.product.entity.AttrGroupEntity;
 import com.example.gulimail.product.service.AttrGroupService;
@@ -40,6 +39,24 @@ public class AttrGroupController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private AttrService attrService;
+
+    @Operation(summary = "获取分类下所有分组和关联属性")
+    @GetMapping("/{catelogId}/withattr")
+    public R groupAndRelation(@PathVariable("catelogId") Long catelogId) {
+        List<AttrGroupVo> attrGroupVos = attrGroupService.selectByCatId(catelogId);
+        return R.ok().put("data", attrGroupVos);
+    }
+
+    @GetMapping("/{attrGroupId}/attr/relation")
+    public R attrRelation(@PathVariable("attrGroupId") Long attrGroupId) {
+        //
+        List<AttrEntity> entities = attrService.getRelationAttr(attrGroupId);
+
+        return R.ok().put("data", entities);
+    }
 
     /**
      * 列表

@@ -31,7 +31,9 @@ public class Knif4eConfig {
                         "/product/brand/**",
                         "/product/category/**",
                         "/product/attrgroup/**",
-                        "/product/categorybrandrelation/**"
+                        "/product/categorybrandrelation/**",
+                        "/product/attr/**",
+                        "/product/**"
                 ).
                 build();
     }

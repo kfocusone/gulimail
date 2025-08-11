@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.gulimail.product.entity.BrandEntity;
 import com.example.gulimail.product.service.BrandService;
+import com.example.gulimail.product.vo.BrandVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,19 +56,22 @@ public class CategoryBrandRelationController {
      * 3.Controller接受Service处理完的数据,封装成页面指定的vo
      */
     @GetMapping("/brands/list")
-    public R relaionBrandList(@RequestParam(value = "catId", required = true) Long catId) {
+    public R relaionBrandsList(@RequestParam(value = "catId", required = true) Long catId) {
 
-        LambdaQueryWrapper<CategoryBrandRelationEntity> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(CategoryBrandRelationEntity::getCatelogId, catId);
-        List<CategoryBrandRelationEntity> cateList = categoryBrandRelationService.list(queryWrapper);
-
-        List<BrandEntity> brandEntities = new ArrayList<>();
-        for (CategoryBrandRelationEntity entity : cateList) {
-            brandEntities.add(brandService.getById(entity.getBrandId()));
-        }
+        // 为方便其他查找属性，尽量返回为 BrandEntity，方便其他用户使用
+        // controller 内容尽量少，具体实现在 service里实现
+        List<BrandEntity> brandEntities = categoryBrandRelationService.getBrandsById(catId);
 
 
-        return R.ok().put("brands", brandEntities);
+        List<BrandVo> collect = brandEntities.stream().map(entity -> {
+            BrandVo brandVo = new BrandVo();
+            brandVo.setBrandId(entity.getBrandId());
+            brandVo.setBrandName(entity.getName());
+            return brandVo;
+        }).collect(Collectors.toList());
+
+
+        return R.ok().put("data", collect);
     }
 
     /**

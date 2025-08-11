@@ -1,5 +1,6 @@
 package com.example.gulimail.coupon.service.impl;
 
+import com.example.gulimail.common.to.SkuReductionTo;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -29,6 +30,11 @@ public class SkuFullReductionServiceImpl extends ServiceImpl<SkuFullReductionDao
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public void saveSkuReduction(SkuReductionTo skuReductionTo) {
+        return;
     }
 
 }

@@ -1,1 +1,15 @@
-spring.application.name=gulimail-third-party
+server:
+  port: 18080
+
+spring:
+  application:
+    name: gulimail-third-party
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.20.233.184:8848
+        username: nacos  # 如果账户密码修改，需要在此显式列出
+        password: 123456
+
+  jackson:
+    time-zone: GMT+8  # 设置程序运行时的时区

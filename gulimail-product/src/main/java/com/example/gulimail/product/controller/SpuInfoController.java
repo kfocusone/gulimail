@@ -3,6 +3,7 @@ package com.example.gulimail.product.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.example.gulimail.product.vo.spuVo.SpuSaveVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,12 +55,15 @@ public class SpuInfoController {
     }
 
     /**
-     * 保存
+     * 保存 spu info 信息
+     *  1. 通过前端设置返回一系列 json 数据
+     *  2. 通过 json 转换java类工具，转换成对应的 spuSaveVo
+     *  3. 通过方法设置对应的数据表保存逻辑
      */
     @RequestMapping("/save")
     //@RequiresPermissions("product:spuinfo:save")
-    public R save(@RequestBody SpuInfoEntity spuInfo){
-            spuInfoService.save(spuInfo);
+    public R save(@RequestBody SpuSaveVo spuVo){
+            spuInfoService.saveSpuInfo(spuVo);
 
         return R.ok();
     }

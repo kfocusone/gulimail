@@ -16,4 +16,5 @@ public class GulimailGatewayApplication {
         SpringApplication.run(GulimailGatewayApplication.class, args);
     }
 
+
 }

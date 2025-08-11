@@ -38,8 +38,8 @@
         <knife4j.version>4.5.0</knife4j.version>
         <hutool.version>5.8.29</hutool.version>
         <mysql.version>8.3.0</mysql.version>
-        <spring.cloud.version>2023.0.6</spring.cloud.version>
-        <alibaba.cloud.version>2023.0.3.2</alibaba.cloud.version>
+        <spring.cloud.version>2023.0.2</spring.cloud.version>
+        <alibaba.cloud.version>2023.0.1.0</alibaba.cloud.version>
     </properties>
 
     <!-- 这个文件也许写在gulimail-common 模块更好 -->
@@ -81,6 +81,11 @@
                 <version>${knife4j.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.example</groupId>
+                <artifactId>gulimail-common</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
 
             <!-- lombok -->
             <dependency>

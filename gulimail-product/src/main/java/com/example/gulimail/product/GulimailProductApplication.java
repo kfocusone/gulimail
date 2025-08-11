@@ -4,9 +4,8 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+
 
 /**
  * mybatisPlus 配置
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @MapperScan("com.example.gulimail.product.dao")
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableFeignClients(basePackages = "com.example.gulimail.product.feign")
 public class GulimailProductApplication {
 
     public static void main(String[] args) {

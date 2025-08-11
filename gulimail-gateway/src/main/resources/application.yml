@@ -1,37 +1,65 @@
 spring:
+  jackson:
+    time-zone: GMT+8  # 设置程序运行时的时区
   cloud:
     nacos:
       discovery:
         server-addr: 172.20.233.184:8848
-        username: nacos  # ?????????????????
+        username: nacos
         password: 123456
+#        namespace: 6a85da46-c389-4a69-a88f-62779fc96edb
+#        group: DEFAULT_GROUP
       config:
         server-addr: 172.20.233.184:8848
         username: nacos
         password: 123456
-        namespace: gateway
+        namespace: 6a85da46-c389-4a69-a88f-62779fc96edb
         group: DEFAULT_GROUP
         refresh-enabled: true
         file-extension: yaml
     gateway:
       routes:
-      - id: query_route
-        uri: https://www.baidu.com
-        predicates:
-        - Query=url,baidu
+        # 路由1：反向代理
+        - id: baidu_proxy_route
+          uri: https://www.baidu.com
+          predicates:
+            - Path=/proxy/**
+          filters:
+            - StripPrefix=1   # 去掉 /proxy 前缀，比如 /proxy/index.html 实际请求 https://www.baidu.com/index.html
 
-      - id: qq_route
-        uri: https://www.qq.com
-        predicates:
-          - Query=url,qq
+        # 路由2：重定向
+        - id: baidu_redirect_route
+          uri: https://www.baidu.com   # 随便写
+          predicates:
+            - Path=/baidu
+          filters:
+            - RedirectTo=302,https://www.baidu.com
+
+        - id: member_route
+          uri: lb://gulimail-member
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment} # 意为去掉api路径
+
   config:
     import:
-          - nacos:gulimail-gateway?group=DEFAULT_GROUP
-  application:
-    name: gulimail-gateway
+      - nacos:gulimail-gateway?group=DEFAULT_GROUP&file-extension=yaml
   autoconfigure:
     exclude:
-              - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration  # 不要把 sql 导入，因为没有用到 数据库
 
 server:
-  port: 10006
+  port: 9006
+
+springdoc:
+  default-flat-param-object: true
+
+logging:
+  file:
+    path: logs/gateway
+  #  pattern:
+  #    file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n" # 输出到文件的日志格式
+  level:
+    com.example.gulimail.gateway: DEBUG
+    org.springframework.cloud.gateway: debug

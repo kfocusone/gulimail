@@ -5,11 +5,13 @@ import com.example.gulimail.common.utils.PageUtils;
 import com.example.gulimail.common.valid.SaveValid;
 import com.example.gulimail.common.valid.UpdateStatus;
 import com.example.gulimail.common.valid.UpdateVaild;
+import com.example.gulimail.product.entity.BrandEntity;
 import com.example.gulimail.product.entity.CategoryBrandRelationEntity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,4 +30,6 @@ public interface CategoryBrandRelationService extends IService<CategoryBrandRela
     void updateBrand( Long brandId,  String name);
 
     void updateCatelog(Long catId, String name);
+
+    List<BrandEntity> getBrandsById(Long catId);
 }

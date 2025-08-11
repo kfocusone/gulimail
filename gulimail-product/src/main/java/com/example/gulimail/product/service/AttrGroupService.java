@@ -3,7 +3,9 @@ package com.example.gulimail.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.gulimail.common.utils.PageUtils;
 import com.example.gulimail.product.entity.AttrGroupEntity;
+import com.example.gulimail.product.vo.AttrGroupVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,4 +20,6 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     PageUtils queryPage(Map<String, Object> params, Long catelogId);
+
+    List<AttrGroupVo> selectByCatId(Long catelogId);
 }

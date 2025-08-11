@@ -3,6 +3,7 @@ package com.example.gulimail.product.dao;
 import com.example.gulimail.product.entity.CategoryEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 
@@ -20,6 +21,6 @@ public interface CategoryDao extends BaseMapper<CategoryEntity> {
      * @param catId
      * @return
      */
-    @Select("SELECT name from pms_category where cat_id = {id}")
-    String selectNameById(Long catId);
+    @Select("SELECT name from pms_category where cat_id = ${id}")
+    String selectNameById(@Param("id") Long catId);
 }

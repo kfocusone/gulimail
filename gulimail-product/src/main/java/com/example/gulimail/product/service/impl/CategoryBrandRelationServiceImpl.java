@@ -5,11 +5,16 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.gulimail.product.dao.BrandDao;
 import com.example.gulimail.product.dao.CategoryDao;
+import com.example.gulimail.product.entity.BrandEntity;
 import com.example.gulimail.product.service.BrandService;
 import com.example.gulimail.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -84,6 +89,19 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         updateWrapper.eq(CategoryBrandRelationEntity::getBrandId, catId);
         updateWrapper.set(CategoryBrandRelationEntity::getBrandName, name);
         this.update(updateWrapper);
+    }
+
+    @Override
+    public List<BrandEntity> getBrandsById(Long catId) {
+        LambdaQueryWrapper<CategoryBrandRelationEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(CategoryBrandRelationEntity::getCatelogId, catId);
+
+        List<BrandEntity> brandEntities = this.list(queryWrapper).stream().map(item -> {
+            Long brandId = item.getBrandId();
+            return brandDao.selectById(brandId);
+        }).collect(Collectors.toList());
+
+        return brandEntities;
     }
 
 }

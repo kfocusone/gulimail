@@ -19,6 +19,7 @@ public class SpuInfoDescEntity {
 
     /**
      * 商品id
+     *  其不是自增的，而是随着让后端提交数据给数据库，因此设置为 input类型
      */
     @TableId(type = IdType.INPUT)
 	private Long spuId;

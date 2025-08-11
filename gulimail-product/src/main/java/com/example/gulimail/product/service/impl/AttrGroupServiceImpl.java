@@ -1,8 +1,22 @@
 package com.example.gulimail.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.gulimail.product.dao.AttrDao;
+import com.example.gulimail.product.entity.AttrAttrgroupRelationEntity;
+import com.example.gulimail.product.entity.AttrEntity;
+import com.example.gulimail.product.service.AttrAttrgroupRelationService;
+import com.example.gulimail.product.service.AttrService;
+import com.example.gulimail.product.vo.AttrGroupVo;
+import com.example.gulimail.product.vo.AttrVO;
+import jakarta.annotation.Resource;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -22,6 +36,13 @@ import org.springframework.util.StringUtils;
  */
 @Service
 public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEntity> implements AttrGroupService {
+
+    @Autowired
+    private AttrAttrgroupRelationService relationService;
+
+    @Resource
+    private AttrDao attrDao;
+
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -82,6 +103,30 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
             return new PageUtils(page);
         }
+    }
+
+    @Override
+    public List<AttrGroupVo> selectByCatId(Long catelogId) {
+        List<AttrGroupEntity> attrGroupList = this.list(new LambdaQueryWrapper<AttrGroupEntity>()
+                .eq(AttrGroupEntity::getCatelogId, catelogId));
+
+        List<AttrGroupVo> attrGroupVos = attrGroupList.stream().map(item -> {
+            AttrGroupVo attrGroupVo = new AttrGroupVo();
+            BeanUtils.copyProperties(item, attrGroupVo);
+            List<AttrAttrgroupRelationEntity> relationEntities = relationService.list(new LambdaQueryWrapper<AttrAttrgroupRelationEntity>()
+                    .eq(AttrAttrgroupRelationEntity::getAttrGroupId, item.getAttrGroupId()));
+            List<AttrVO> collect = relationEntities.stream().map(entity -> {
+                AttrEntity attr = attrDao.selectById(entity.getAttrId());
+                AttrVO attrVO = new AttrVO();
+                BeanUtils.copyProperties(attr, attrVO);
+                attrVO.setAttrGroupId(entity.getAttrGroupId());
+                return attrVO;
+            }).collect(Collectors.toList());
+            attrGroupVo.setAttrVo(collect);
+            return attrGroupVo;
+        }).toList();
+
+        return attrGroupVos;
     }
 
 }
