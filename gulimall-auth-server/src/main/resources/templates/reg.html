@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Register</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .form-container {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        input[type='tel'], input[type='password'] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .code-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .code-group input {
+            flex: 1;
+        }
+
+        .code-group button {
+            width: 140px;
+            padding: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .code-group button:disabled {
+            background: #ccc;
+        }
+
+        button[type='submit'] {
+            background: #f093fb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .link-footer {
+            margin-top: 24px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .link-footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2>Register</h2>
+
+    <!-- 注册表单 -->
+    <form id="registerForm">
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" name="phone" id="regPhone" required />
+        </div>
+
+        <div class="form-group">
+            <label>Verification Code</label>
+            <div class="code-group">
+                <input type="text" name="code" required />
+                <button type="button" id="regSendCode">Send Code</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" required />
+        </div>
+
+        <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" name="confirmPassword" required />
+        </div>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <!-- 去登录的链接 -->
+    <div class="link-footer">
+        已有账号？
+        <a href="/login">去登录</a>
+    </div>
+</div>
+
+<script>
+    // 发送验证码
+    document.getElementById('regSendCode').addEventListener('click', function () {
+        const phone = document.getElementById('regPhone').value.trim();
+        const btn = this;
+
+        if (!phone || !/^\d{11}$/.test(phone)) {
+            alert('请输入有效的11位手机号');
+            return;
+        }
+
+        btn.disabled = true;
+        let timeLeft = 60;
+        const timer = setInterval(() => {
+            timeLeft--;
+            btn.textContent = `重新发送(${timeLeft}s)`;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                btn.disabled = false;
+                btn.textContent = '发送验证码';
+            }
+        }, 1000);
+
+        console.log('✅ 验证码已发送至:', phone);
+    });
+
+    // 注册提交：成功后跳转到百度
+    document.getElementById('registerForm').addEventListener('submit', function (e) {
+        e.preventDefault(); // 阻止默认提交
+
+        const phone = document.querySelector('input[name="phone"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+        const confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
+
+        if (password !== confirmPassword) {
+            alert('两次密码不一致！');
+            return;
+        }
+
+        // ✅ 注册成功，跳转到百度（你可以改成任何 URL）
+        alert('注册成功！');
+        window.location.href = 'https://www.baidu.com';
+    });
+</script>
+</body>
+</html>

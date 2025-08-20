@@ -1,0 +1,25 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: gulimall-auth-server
+  thymeleaf:
+    cache: false
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.20.233.184:8848
+        username: nacos
+        password: 123456
+
+
+#      config:
+#        server-addr: 172.20.233.184:8848
+#        username: nacos
+#        password: 123456
+#
+#  config:
+#    import:
+#      -

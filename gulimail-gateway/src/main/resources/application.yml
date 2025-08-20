@@ -1,3 +1,6 @@
+server:
+  port: 9006
+
 spring:
   jackson:
     time-zone: GMT+8  # 设置程序运行时的时区
@@ -48,9 +51,6 @@ spring:
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration  # 不要把 sql 导入，因为没有用到 数据库
-
-server:
-  port: 9006
 
 springdoc:
   default-flat-param-object: true

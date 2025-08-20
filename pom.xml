@@ -19,6 +19,7 @@
         <module>gulimail-member</module>
         <module>gulimail-gateway</module>
         <module>gulimail-third-party</module>
+        <module>gulimall-auth-server</module>
     </modules>
 
     <parent>
